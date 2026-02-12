@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mystery Box - Next-Gen Reddit Gaming Experience</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #667eea;
+            --secondary: #764ba2;
+            --accent: #f093fb;
+            --accent2: #f5576c;
+            --dark: #1a1a2e;
+            --light: #f8f9ff;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background: #000;
+            overflow-x: hidden;
+        }
+        
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+            z-index: -1;
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Floating Particles */
+        .particle {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 20s infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0) scale(1);
+                opacity: 0;
+            }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% {
+                transform: translateY(-100vh) translateX(100px) scale(0);
+                opacity: 0;
+            }
+        }
+        
+        body {
+            padding: 0;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease;
+        }
+        
+        .hero p {
+            font-size: 1.3em;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+            animation: fadeIn 1s ease;
+        }
+        
+        .section-title {
+            font-size: 2.2em;
+            color: #667eea;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .intro {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: #333;
+            background: #f8f9ff;
+            padding: 30px;
+            border-radius: 15px;
+            border-left: 5px solid #667eea;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .feature-card {
+            background: linear-gradient(145deg, #ffffff 0%, #f8f9ff 100%);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 2px solid #e8ecff;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+        
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+        
+        .feature-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+        
+        .feature-card p {
+            color: #555;
+            line-height: 1.6;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .tech-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+        }
+        
+        .getting-started {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+        
+        .getting-started h3 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        
+        .steps {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+        
+        .steps li {
+            counter-increment: step-counter;
+            margin-bottom: 20px;
+            padding-left: 60px;
+            position: relative;
+            font-size: 1.1em;
+        }
+        
+        .steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: -5px;
+            background: white;
+            color: #f5576c;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+        
+        .highlight-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        .highlight-box strong {
+            color: #856404;
+        }
+        
+        .footer {
+            background: #1a1a2e;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            font-size: 0.95em;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            color: #e83e8c;
+        }
+        
+        .command-box {
+            background: #2d2d2d;
+            color: #00ff00;
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <h1>🎮 Mystery Box</h1>
+            <p>An Interactive Word-Guessing Game Built for Reddit</p>
+        </div>
+        
+        <div class="content">
+            <!-- Introduction Section -->
+            <div class="section">
+                <h2 class="section-title">📖 What is Mystery Box?</h2>
+                <div class="intro">
+                    <p>
+                        <strong>Mystery Box</strong> is an immersive, interactive game built on Reddit's developer platform (Devvit). 
+                        It's designed to bring the excitement of word-guessing puzzles directly into the Reddit experience. 
+                        Players solve mysteries by uncovering hidden letters, using power-ups, earning badges, and competing with others in various game modes.
+                    </p>
+                    <br>
+                    <p>
+                        Think of it as a combination of <strong>Wordle meets Hangman</strong>, but supercharged with 
+                        modern gaming features like achievements, leaderboards, team challenges, and seasonal events—all 
+                        seamlessly integrated within Reddit posts and communities.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- How It Works Section -->
+            <div class="section">
+                <h2 class="section-title">🎯 How Does It Work?</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🔤</div>
+                        <h3>Solve Mysteries</h3>
+                        <p>Players are presented with hidden words or phrases. They guess letters to reveal the mystery, using hints and strategic thinking to solve it quickly.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">💎</div>
+                        <h3>Earn Points</h3>
+                        <p>Successfully solving mysteries awards points. Use these points to purchase power-ups that help you solve even tougher challenges.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🏆</div>
+                        <h3>Unlock Achievements</h3>
+                        <p>Complete specific challenges to earn badges and titles. From "First Blood" to "Mystery Master," show off your accomplishments!</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🎨</div>
+                        <h3>Customize Experience</h3>
+                        <p>Choose difficulty levels, switch themes, and personalize your gameplay experience to match your skill level and preferences.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Features Section -->
+            <div class="section">
+                <h2 class="section-title">✨ Complete Feature Set (12 Major Features)</h2>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">⚡</div>
+                        <h3>1. Power-Ups System</h3>
+                        <p><strong>Reveal Letter</strong> (50 pts), <strong>Skip to Hint</strong> (75 pts), <strong>50/50 Mode</strong> (100 pts). Strategic tools to help you solve faster!</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🎉</div>
+                        <h3>2. Animated Celebrations</h3>
+                        <p>Beautiful confetti animations, success pop-ups, and achievement notifications make every victory feel special.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🏅</div>
+                        <h3>3. Badges & Titles</h3>
+                        <p>10 unique badges from Common to Legendary rarity. Each unlocks a special title you can display with your username.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>4. Stats Dashboard</h3>
+                        <p>Track total solves, accuracy rate, fastest time, 7-day activity graph, and more. Know your strengths and improve!</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">👥</div>
+                        <h3>5. Team Challenges</h3>
+                        <p>Create or join teams, choose custom emblems, and compete together. View team leaderboards and member contributions.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">⚔️</div>
+                        <h3>6. VS Mode (1v1)</h3>
+                        <p>Challenge other players to head-to-head battles. Real-time progress tracking and win/loss records included.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">✍️</div>
+                        <h3>7. Mystery Creator Studio</h3>
+                        <p>Build your own mysteries! Add custom words, hints, categories, and difficulty levels. Community voting system included.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🎚️</div>
+                        <h3>8. Difficulty Levels</h3>
+                        <p>Choose from Easy, Medium, Hard, or Expert. Each level adjusts hints, time limits, and point multipliers.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🏁</div>
+                        <h3>9. Race Mode</h3>
+                        <p>Multiplayer racing where 2-8 players compete simultaneously to solve the same mystery. Live progress bars show who's ahead!</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">📱</div>
+                        <h3>10. Reddit Sharing</h3>
+                        <p>Share your achievements directly to Reddit. Create posts showcasing your best solves, streaks, and badges.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🎄</div>
+                        <h3>11. Seasons & Events</h3>
+                        <p>Participate in limited-time seasonal events with special challenges, exclusive badges, and themed mysteries.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🎨</div>
+                        <h3>12. Theme Switcher</h3>
+                        <p>Toggle between Light and Dark modes for comfortable playing any time of day.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tech Stack Section -->
+            <div class="section">
+                <h2 class="section-title">🛠️ Technology Stack</h2>
+                <p style="margin-bottom: 20px;">Built with modern web technologies for optimal performance and developer experience:</p>
+                <div class="tech-stack">
+                    <div class="tech-badge">Devvit (Reddit Platform)</div>
+                    <div class="tech-badge">React 19</div>
+                    <div class="tech-badge">TypeScript</div>
+                    <div class="tech-badge">Vite 7</div>
+                    <div class="tech-badge">Hono (Backend)</div>
+                    <div class="tech-badge">Tailwind CSS 4</div>
+                    <div class="tech-badge">Node.js 22+</div>
+                </div>
+                
+                <div class="highlight-box">
+                    <strong>Why These Technologies?</strong>
+                    <ul style="margin-top: 10px; margin-left: 20px;">
+                        <li><strong>Devvit:</strong> Official Reddit development platform for building immersive experiences</li>
+                        <li><strong>React:</strong> Powerful UI library for interactive components</li>
+                        <li><strong>TypeScript:</strong> Type safety ensures fewer bugs and better code quality</li>
+                        <li><strong>Vite:</strong> Lightning-fast build tool and hot module replacement</li>
+                        <li><strong>Hono:</strong> Lightweight and fast backend API framework</li>
+                        <li><strong>Tailwind:</strong> Utility-first CSS for rapid UI development</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Project Structure -->
+            <div class="section">
+                <h2 class="section-title">📁 Project Structure</h2>
+                <p>The project follows a clean, organized architecture:</p>
+                
+                <div style="background: #f8f9ff; padding: 30px; border-radius: 15px; margin-top: 20px;">
+                    <pre style="font-family: 'Courier New', monospace; line-height: 1.8; color: #333;">
+<strong>mystery-box-p/</strong>
+├── <strong>src/</strong>
+│   ├── <strong>client/</strong>           - Frontend React application
+│   │   ├── game/            - Main game components
+│   │   │   └── components/  - 12 feature components
+│   │   ├── hooks/           - Custom React hooks
+│   │   └── splash/          - Landing page
+│   │
+│   ├── <strong>server/</strong>           - Backend API logic
+│   │   ├── core/            - Core game logic
+│   │   └── routes/          - API endpoints
+│   │
+│   └── <strong>shared/</strong>           - Shared types & utilities
+│       └── types/           - TypeScript definitions
+│
+├── <strong>Configuration Files</strong>
+│   ├── devvit.json          - Reddit app configuration
+│   ├── package.json         - Dependencies & scripts
+│   ├── tsconfig.json        - TypeScript settings
+│   └── vite.config.ts       - Build configuration
+│
+└── <strong>Documentation</strong>
+    ├── README.md            - Getting started guide
+    ├── COMPLETE_FEATURE_SET.md  - All 12 features
+    └── INTEGRATION_GUIDE.md     - Developer guide
+                    </pre>
+                </div>
+            </div>
+            
+            <!-- Getting Started Section -->
+            <div class="getting-started">
+                <h3>🚀 How to Get Started</h3>
+                <p style="margin-bottom: 30px;">Follow these simple steps to run the project locally:</p>
+                
+                <ul class="steps">
+                    <li><strong>Install Node.js:</strong> Make sure you have Node.js version 22 or higher installed on your machine.</li>
+                    <li><strong>Clone the Project:</strong> Download or clone the mystery-box-p folder to your computer.</li>
+                    <li><strong>Install Dependencies:</strong> Open terminal in the project folder and run: <code>npm install</code></li>
+                    <li><strong>Login to Reddit:</strong> Connect your Reddit account: <code>npm run login</code></li>
+                    <li><strong>Start Development Server:</strong> Run the playtest server: <code>npm run dev</code></li>
+                </ul>
+                
+                <div class="command-box">
+$ cd mystery-box-p
+$ npm install
+$ npm run login
+$ npm run dev
+✅ Playtest ready!
+                </div>
+            </div>
+            
+            <!-- Available Commands -->
+            <div class="section">
+                <h2 class="section-title">⌨️ Available Commands</h2>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>npm run dev</h3>
+                        <p>Starts a local development server where you can test your app live on Reddit.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3>npm run build</h3>
+                        <p>Compiles and builds your client and server projects for production.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3>npm run deploy</h3>
+                        <p>Uploads a new version of your app to Reddit after running all checks.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h3>npm run launch</h3>
+                        <p>Publishes your app for public review and distribution on Reddit.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- What to Do Section -->
+            <div class="section">
+                <h2 class="section-title">🎯 What Can You Do With This Project?</h2>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🎮</div>
+                        <h3>Play & Test</h3>
+                        <p>Run the game locally, test all 12 features, and experience the full gameplay loop from creating mysteries to competing in races.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🔧</div>
+                        <h3>Customize & Extend</h3>
+                        <p>Modify existing features, add new game modes, create custom themes, or integrate additional Reddit APIs.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">🚀</div>
+                        <h3>Deploy to Reddit</h3>
+                        <p>Launch your version on Reddit communities, gather real users, and iterate based on feedback.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <div class="feature-icon">📚</div>
+                        <h3>Learn & Experiment</h3>
+                        <p>Study the codebase to learn React, TypeScript, Devvit APIs, and modern web development patterns.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Key Highlights -->
+            <div class="section">
+                <h2 class="section-title">💡 Key Highlights</h2>
+                <div style="background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%); padding: 30px; border-radius: 15px; color: #1a1a2e;">
+                    <ul style="line-height: 2; font-size: 1.1em; list-style-position: inside;">
+                        <li>✅ <strong>Complete Feature Set:</strong> All 12 major features fully implemented and ready to use</li>
+                        <li>✅ <strong>Production Ready:</strong> Type-safe, tested, and optimized for performance</li>
+                        <li>✅ <strong>Modern Stack:</strong> Latest versions of React, TypeScript, and Vite</li>
+                        <li>✅ <strong>Comprehensive Documentation:</strong> Detailed guides for integration and development</li>
+                        <li>✅ <strong>Reddit Native:</strong> Built specifically for Reddit's developer platform</li>
+                        <li>✅ <strong>Scalable Architecture:</strong> Clean code structure for easy maintenance and extension</li>
+                        <li>✅ <strong>Beautiful UI:</strong> Tailwind-powered responsive design with animations</li>
+                        <li>✅ <strong>Multiplayer Ready:</strong> Team challenges, VS mode, and race mode included</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Next Steps -->
+            <div class="section">
+                <h2 class="section-title">🎓 Next Steps & Learning Path</h2>
+                <div class="intro">
+                    <ol style="margin-left: 20px; line-height: 2;">
+                        <li><strong>Run the Project:</strong> Start with <code>npm run dev</code> and explore the game in action</li>
+                        <li><strong>Read the Docs:</strong> Check README.md, COMPLETE_FEATURE_SET.md, and INTEGRATION_GUIDE.md</li>
+                        <li><strong>Explore Components:</strong> Open files in <code>src/client/game/components/</code> to see how each feature works</li>
+                        <li><strong>Test Features:</strong> Play around with power-ups, create a team, try VS mode</li>
+                        <li><strong>Customize:</strong> Modify colors, add new badges, or create new game modes</li>
+                        <li><strong>Deploy:</strong> When ready, use <code>npm run deploy</code> to publish to Reddit</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>🎮 Mystery Box - Built with ❤️ on Reddit's Devvit Platform</p>
+            <p style="margin-top: 10px; opacity: 0.8;">A complete interactive game experience with 12 major features</p>
+        </div>
+    </div>
+    
+    <script>
+        // AI Narration System - Auto-starts on page load
+        let speech = null;
+        let currentSectionIndex = 0;
+        
+        // Content to narrate
+        const narrationSections = [
+            {
+                title: "Welcome",
+                text: "Welcome to Mystery Box! An interactive word-guessing game built for Reddit."
+            },
+            {
+                title: "Introduction",
+                text: "Mystery Box is an immersive, interactive game built on Reddit's developer platform, called Devvit. It's designed to bring the excitement of word-guessing puzzles directly into the Reddit experience. Players solve mysteries by uncovering hidden letters, using power-ups, earning badges, and competing with others in various game modes."
+            },
+            {
+                title: "Concept",
+                text: "Think of it as a combination of Wordle meets Hangman, but supercharged with modern gaming features like achievements, leaderboards, team challenges, and seasonal events, all seamlessly integrated within Reddit posts and communities."
+            },
+            {
+                title: "How It Works",
+                text: "Here's how the game works: Players are presented with hidden words or phrases. They guess letters to reveal the mystery, using hints and strategic thinking to solve it quickly. Successfully solving mysteries awards points, which you can use to purchase power-ups that help you solve even tougher challenges. Complete specific challenges to earn badges and titles, from First Blood to Mystery Master. You can also customize your experience by choosing difficulty levels, switching themes, and personalizing your gameplay."
+            },
+            {
+                title: "Features Overview",
+                text: "The game includes an amazing 12 major features. Let me highlight some of them: The Power-Ups System lets you reveal letters, skip to hints, or use 50-50 mode. There are beautiful animated celebrations with confetti and success pop-ups. You can earn 10 unique badges ranging from common to legendary rarity. The Stats Dashboard tracks your total solves, accuracy rate, fastest time, and more. Team Challenges let you create or join teams and compete together. VS Mode allows one-on-one battles with other players. There's even a Mystery Creator Studio where you can build your own puzzles!"
+            },
+            {
+                title: "Technology Stack",
+                text: "The project is built with cutting-edge technologies. It uses Devvit, which is Reddit's official development platform. The frontend is powered by React 19 with TypeScript for type safety. Vite 7 provides lightning-fast builds. The backend uses Hono, a lightweight API framework. And Tailwind CSS 4 ensures beautiful, responsive styling."
+            },
+            {
+                title: "Getting Started",
+                text: "Getting started is super easy! First, make sure you have Node.js version 22 or higher installed. Then clone the project and open a terminal in the mystery-box-p folder. Run npm install to get all dependencies. Next, run npm run login to connect your Reddit account. Finally, run npm run dev to start the development server. That's it! You'll see Playtest ready, and you can start playing!"
+            },
+            {
+                title: "Conclusion",
+                text: "This is a complete, production-ready game with all 12 major features fully implemented. Whether you want to play and test, customize and extend, deploy to Reddit communities, or learn from the codebase, Mystery Box has everything you need. Thanks for checking out this project. Now start exploring and have fun solving mysteries!"
+            }
+        ];
+        
+        // Check if browser supports speech synthesis
+        if ('speechSynthesis' in window) {
+            let voices = [];
+            
+            function loadVoices() {
+                voices = speechSynthesis.getVoices();
+                const preferredVoice = voices.find(v => v.lang.startsWith('en') && v.name.includes('Google')) 
+                    || voices.find(v => v.lang.startsWith('en-US'))
+                    || voices.find(v => v.lang.startsWith('en'))
+                    || voices[0];
+                
+                return preferredVoice;
+            }
+            
+            speechSynthesis.onvoiceschanged = loadVoices;
+            loadVoices();
+            
+            // Auto-start narration when page loads
+            window.addEventListener('load', () => {
+                setTimeout(() => {
+                    startNarration();
+                }, 1000);
+            });
+            
+            function startNarration() {
+                currentSectionIndex = 0;
+                narrateSection(0);
+            }
+            
+            function narrateSection(index) {
+                if (index >= narrationSections.length) {
+                    console.log('Narration complete');
+                    return;
+                }
+                
+                const section = narrationSections[index];
+                speech = new SpeechSynthesisUtterance(section.text);
+                
+                // Configure speech
+                const voice = loadVoices();
+                if (voice) speech.voice = voice;
+                speech.rate = 1.0;
+                speech.pitch = 1.0;
+                speech.volume = 1.0;
+                speech.lang = 'en-US';
+                
+                // When section ends, move to next
+                speech.onend = () => {
+                    currentSectionIndex++;
+                    if (currentSectionIndex < narrationSections.length) {
+                        setTimeout(() => {
+                            narrateSection(currentSectionIndex);
+                        }, 500);
+                    }
+                };
+                
+                speech.onerror = (event) => {
+                    console.error('Speech error:', event);
+                };
+                
+                speechSynthesis.speak(speech);
+            }
+        } else {
+            console.error('Speech synthesis not supported in this browser');
+        }
+    </script>
+</body>
+</html>
